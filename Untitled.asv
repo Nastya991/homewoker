@@ -1,0 +1,36 @@
+close all;
+clear all;
+clc;
+
+k = 0.2337;
+T = 100;
+n = 60;
+t = linspace(1,100,n);% t values
+U = [exp(-t)];
+u = -k*(U-T); %model
+
+for 
+    i = 1:60;
+    U(i) = exp(-i);
+end
+
+first_milk = u(i)>=70;
+second_milk=u(i)<70;
+
+if first_milk
+    u = -k*(U(i)-T);
+    
+     figure;
+    hold on;
+    plot(t,u,'black')
+    hold off;
+    
+elseif sicond_milk
+    u = -k*(U(i)-T);
+    
+ figure;
+    hold on;
+    plot(t,u,'red')
+    hold off;
+end
+
