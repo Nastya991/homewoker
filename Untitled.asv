@@ -3,33 +3,30 @@ clear all;
 clc;
 
 k = 0.2337;
-tem_milk = 4;
-tem_coffe = 90;
-tem_opt = 60;
-tem_evoun = 23;
-t=linspace(1,100);% t values
-add_milk = 10;
+T = 100;
+n = 60;
+t=linspace(1,100,n);% t values
+u=exp(-t);
+u1=-k*(T-u); %model
 
-temperature = tem_opt;
-f = @(temperature,k,tem_evoun) -k*(temperature - tem_evoun);
+i=1:60;
+u=exp(-i);
 
-for i = 2:length(t);
-    if i ==add_milk;
-        mixture = (0.5*temperature(i-1) + 0.3*tem_milk)/...
-            (0.5 + 0.3);
-        temperature(i) = mixture;
-    else
-         s = (t(i) - t(i-1));
-        temperature(i) = temperature(i-1) + s*f(temperature(i-1),k,tem_evoun);
-    end
-end
-[~,index] = min(abs(temperature - tem_opt));
+first_milk = u>=70;
+second_milk=u<70;
 
+if first_milk
+u1= -k*(T-u);
 
 figure;
 hold on;
-plot(t,temperature);
+plot(t,u,'black')
 hold off;
-grid on;
-xlabel('Time');
-ylabel('Temperature');
+elseif second_milk
+u1=-k*(T-u);
+
+figure;
+hold on;
+plot(t,u,'red')
+hold off;
+end
